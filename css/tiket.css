@@ -1,0 +1,65 @@
+/* Styling untuk bagian tabel tiket */
+.ticket-section {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.ticket-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.ticket-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fafafa;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.ticket-table th, .ticket-table td {
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 16px;
+    border: 1px solid #ddd;
+}
+
+.ticket-table th {
+    background-color: #f0f0f0;
+    color: #555;
+}
+
+.ticket-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.ticket-table tbody tr:hover {
+    background-color: #e0e0e0;
+    transition: background-color 0.3s ease;
+}
+
+.ticket-table td img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.btn-action {
+    padding: 8px 16px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-action:hover {
+    background-color: #0056b3;
+    transition: background-color 0.3s ease;
+}

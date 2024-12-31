@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ausa Beats</title>
+    <link rel="stylesheet" href="css/tiket.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">Ausa Beats</div>
+            <nav class="nav-center">
+                <a href="index.html" class="nav-item">
+                    <i class="fas fa-home"></i> Beranda
+                </a>
+                <a href="about.html" class="nav-item">
+                    <i class="fas fa-info-circle"></i> Tentang
+                </a>
+                <a href="tiket.html" class="nav-item active">
+                    <i class="fas fa-ticket-alt"></i> Tiket
+                </a>
+                <a href="kontak.html" class="nav-item">
+                    <i class="fas fa-envelope"></i> Kontak
+                </a>
+            </nav>
+            <div class="nav-right">
+                <a href="#" class="btn">Login</a>
+                <a href="#" class="btn">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="ticket-section">
+        <h2>Your Tickets</h2>
+        <table class="ticket-table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>No. Tiket</th>
+                    <th>Tanggal</th>
+                    <th>Nama Konser</th>
+                    <th>Nama</th>
+                    <th>Jumlah Tiket</th>
+                    <th>Total</th>
+                    <th>QRCode</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>#A1234</td>
+                    <td>2024-01-25</td>
+                    <td>Rock Fest 2024</td>
+                    <td>John Doe</td>
+                    <td>2</td>
+                    <td>$100</td>
+                    <td><img src="https://via.placeholder.com/50" alt="QRCode"></td>
+                    <td>Confirmed</td>
+                    <td><button class="btn-action">View</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>#B5678</td>
+                    <td>2024-02-14</td>
+                    <td>Jazz Nights</td>
+                    <td>Jane Smith</td>
+                    <td>1</td>
+                    <td>$50</td>
+                    <td><img src="https://via.placeholder.com/50" alt="QRCode"></td>
+                    <td>Pending</td>
+                    <td><button class="btn-action">View</button></td>
+                </tr>
+                <!-- Tambahkan lebih banyak baris jika perlu -->
+            </tbody>
+        </table>
+    </section>
+</body>
+
+</html>

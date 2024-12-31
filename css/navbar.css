@@ -1,0 +1,109 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f6f6f6;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+}
+
+.nav-center {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-center a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    position: relative;
+}
+
+.nav-right {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-right .btn {
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+}
+
+.nav-right .btn:hover {
+    background-color: #f0f0f0;
+    border-color: #bbb;
+}
+
+/* Ikon */
+.nav-center .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    position: relative;
+    padding: 5px;
+}
+
+/* Hover effect untuk navbar */
+.nav-center .nav-item:hover {
+    color: #0056b3; /* Warna teks berubah */
+    transition: color 0.3s ease; /* Animasi transisi */
+}
+
+.nav-center .nav-item:hover i {
+    color: #0056b3; /* Warna ikon berubah */
+    transition: color 0.3s ease, transform 0.3s ease; /* Animasi untuk warna dan ukuran */
+}
+
+/* Hover effect untuk tombol di nav-right */
+.nav-right .btn:hover {
+    background-color: #e0e0e0; /* Warna background tombol berubah */
+    border-color: #999; /* Warna border tombol berubah */
+    color: #000; /* Warna teks berubah */
+    transition: all 0.3s ease; /* Transisi halus */
+}
+
+.nav-center .nav-item i {
+    font-size: 18px;
+    color: #666;
+}
+
+/* Class active */
+.nav-center .nav-item.active {
+    font-weight: bold;
+    color: #007BFF;
+}
+
+.nav-center .nav-item.active i {
+    color: #007BFF;
+}
