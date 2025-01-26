@@ -126,7 +126,7 @@ function updateOrderSummary(cart, tickets) {
 
     Object.keys(cart).forEach(ticketId => {
         if (cart[ticketId] > 0) {
-            const ticket = tickets.find(t => t.id == ticketId);
+            const ticket = tickets.find(t => t.tiket_id == ticketId);
             const subtotal = ticket.harga * cart[ticketId];
             total += subtotal;
             summaryHTML += `
