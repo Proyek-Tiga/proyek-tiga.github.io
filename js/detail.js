@@ -61,42 +61,22 @@ async function fetchConcertDetail() {
     }
 }
 
-// Panggil fungsi fetchConcertDetail saat halaman dimuat
-document.addEventListener('DOMContentLoaded', () => {
-    fetchConcertDetail();
-    fetchTickets(); // Tambahkan ini agar tiket ikut dimuat
-
-    // Ambil elemen tombol "Order Now"
-    const orderButton = document.getElementById('order-now');
-    orderButton.addEventListener('click', () => {
-        // Ambil ID konser dari URL
-        const concertId = new URLSearchParams(window.location.search).get('id');
-
-        // Jika ID konser ada, arahkan ke halaman payment.html dengan ID tersebut
-        if (concertId) {
-            const paymentUrl = `https://proyek-tiga.github.io/payment.html?id=${concertId}`;
-            window.location.href = paymentUrl;  // Arahkan ke halaman pembayaran
-        } else {
-            alert('ID konser tidak ditemukan!');
-        }
-    });
-});
-
 // Fungsi untuk fetch data tiket
 async function fetchTickets() {
     try {
         const response = await fetch(apiTiketURL);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        
+
         let tickets = await response.json();
+        console.log("Data tiket yang diterima:", tickets); // Log untuk debug
         if (!Array.isArray(tickets)) tickets = [tickets];
 
         const ticketListContainer = document.querySelector('.ticket-list');
         const orderSummaryContainer = document.querySelector('.order-summary');
-        let cart = {}; 
-        
+        let cart = {};
+
         ticketListContainer.innerHTML = tickets.map(ticket => {
-            cart[ticket.id] = 0; 
+            cart[ticket.id] = 0;
             return `
                 <div class="ticket-card" data-id="${ticket.id}">
                     <h4>${ticket.nama_tiket}</h4>
@@ -110,23 +90,23 @@ async function fetchTickets() {
                 </div>
             `;
         }).join('');
-        
+
         ticketListContainer.addEventListener("click", event => {
             const target = event.target;
             if (!target.classList.contains("increase") && !target.classList.contains("decrease")) return;
-            
+
             const ticketId = target.getAttribute("data-id");
             const ticket = tickets.find(t => t.id == ticketId);
-            
+
             if (target.classList.contains("increase") && cart[ticketId] < ticket.jumlah_tiket) {
                 cart[ticketId]++;
             } else if (target.classList.contains("decrease") && cart[ticketId] > 0) {
                 cart[ticketId]--;
             }
             document.getElementById(`quantity-${ticketId}`).textContent = cart[ticketId];
-            updateOrderSummary(cart, tickets);
+            updateOrderSummary(cart, tickets, orderSummaryContainer);
         });
-        
+
         updateOrderSummary(cart, tickets, orderSummaryContainer);
     } catch (error) {
         console.error("Gagal memuat data tiket:", error);
@@ -137,7 +117,7 @@ async function fetchTickets() {
 function updateOrderSummary(cart, tickets) {
     let total = 0;
     let summaryHTML = '<h3>Pesanan:</h3><ul>';
-    
+
     Object.keys(cart).forEach(ticketId => {
         if (cart[ticketId] > 0) {
             const ticket = tickets.find(t => t.id == ticketId);
@@ -150,16 +130,25 @@ function updateOrderSummary(cart, tickets) {
             `;
         }
     });
-    
-    summaryHTML += `</ul><h3>Total Pesanan: Rp ${total.toLocaleString('id-ID')}</h3>`;
+
+    summaryHTML += `</ul><h3>Total: Rp ${total.toLocaleString('id-ID')}</h3>`;
     summaryHTML += '<button id="order-now">Order Now</button>';
 
-    // Perbarui tampilan ringkasan pesanan
-    document.querySelector('.order-summary').innerHTML = summaryHTML;
+    const orderSummaryElement = document.querySelector('.order-summary');
+    if (!orderSummaryElement) {
+        console.error("Elemen .order-summary tidak ditemukan!");
+        return;
+    }
 
-    // Perbarui total harga
-    document.getElementById("total-price").textContent = `Rp ${total.toLocaleString('id-ID')}`;
+    orderSummaryElement.innerHTML = summaryHTML;
 }
+
+// Panggil fungsi fetchConcertDetail dan fetchTickets saat halaman dimuat
+document.addEventListener('DOMContentLoaded', () => {
+    fetchConcertDetail();
+    fetchTickets();
+});
+
 
 
 
