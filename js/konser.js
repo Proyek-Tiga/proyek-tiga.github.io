@@ -59,12 +59,41 @@ async function fetchConcerts() {
             // Tambahkan ke container
             cardsContainer.insertAdjacentHTML('beforeend', cardHTML);
         });
+
+        // Tambahkan event listener untuk setiap tombol "Pesan Sekarang" setelah kartu dimuat
+        const orderButtons = document.querySelectorAll('.btn-card');
+        orderButtons.forEach(button => {
+            button.addEventListener('click', handleOrderClick);
+        });
+
     } catch (error) {
         console.error("Gagal memuat data konser:", error);
 
         // Tampilkan pesan error ke pengguna
         const cardsContainer = document.querySelector('.cards-container');
         cardsContainer.innerHTML = `<p class="error-message">Terjadi kesalahan saat memuat data konser. Silakan coba lagi nanti.</p>`;
+    }
+}
+
+// Fungsi untuk memeriksa apakah pengguna sudah login
+function isLoggedIn() {
+    // Gantilah sesuai cara Anda menyimpan status login (localStorage, cookie, dll)
+    return localStorage.getItem('isLoggedIn') === 'true';  // Contoh menggunakan localStorage
+}
+
+// Fungsi untuk menangani klik tombol "Pesan Sekarang"
+function handleOrderClick(event) {
+    event.preventDefault();  // Mencegah aksi default (navigasi ke link)
+
+    if (!isLoggedIn()) {
+        // Tampilkan pesan login
+        alert("Silakan login terlebih dahulu untuk melakukan pemesanan.");
+        // Arahkan pengguna ke halaman login jika perlu
+        window.location.href = "https://proyek-tiga.github.io/login";  // Ubah URL sesuai dengan halaman login Anda
+    } else {
+        // Lanjutkan ke proses pemesanan jika sudah login
+        alert("Lanjutkan dengan pemesanan!");
+        // Proses pemesanan bisa dimasukkan di sini
     }
 }
 

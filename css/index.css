@@ -84,6 +84,8 @@
 .concert-cards h2 {
     font-size: 2em;
     margin-bottom: 20px;
+    color: #27568b;
+    font-weight: bold;
 }
 
 .cards-container {
@@ -117,6 +119,7 @@
 .card h3 {
     font-size: 1.5em;
     margin: 10px;
+    color: #27568b;
 }
 
 .card p {

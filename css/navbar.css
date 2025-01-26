@@ -6,15 +6,16 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    color: #333;
-    line-height: 1.6;
+    background-color: #C9DDEE;
+    color: white;
+    overflow-x: hidden;
 }
 
 header {
-    background-color: #fff;
+    background-color: #27568b;
     border-bottom: 1px solid #ddd;
     padding: 10px 20px;
+    color: white;
 }
 
 .navbar {
@@ -26,7 +27,7 @@ header {
 .logo {
     font-size: 24px;
     font-weight: bold;
-    color: #000;
+    color: #fff;
 }
 
 .nav-center {
@@ -52,13 +53,18 @@ header {
     text-decoration: none;
     border: 1px solid #ccc;
     font-size: 14px;
-    color: #333;
+    color: #fff;
     text-align: center;
 }
 
 .nav-right .btn:hover {
-    background-color: #f0f0f0;
-    border-color: #bbb;
+    background-color: #47A1C4;
+}
+
+.logo i {
+    margin-right: 8px;  /* Memberikan jarak antara ikon dan teks */
+    font-size: 1.5em;  /* Mengubah ukuran ikon */
+    color: #ffdd57;  /* Mengubah warna ikon */
 }
 
 /* Ikon */
@@ -86,23 +92,9 @@ header {
 
 /* Hover effect untuk tombol di nav-right */
 .nav-right .btn:hover {
-    background-color: #e0e0e0; /* Warna background tombol berubah */
-    border-color: #999; /* Warna border tombol berubah */
-    color: #000; /* Warna teks berubah */
+    background-color: #47A1C4; /* Warna background tombol berubah */
+    border-color: #47A1C4; /* Warna border tombol berubah */
+    color: #fff; /* Warna teks berubah */
     transition: all 0.3s ease; /* Transisi halus */
 }
 
-.nav-center .nav-item i {
-    font-size: 18px;
-    color: #666;
-}
-
-/* Class active */
-.nav-center .nav-item.active {
-    font-weight: bold;
-    color: #007BFF;
-}
-
-.nav-center .nav-item.active i {
-    color: #007BFF;
-}
