@@ -34,8 +34,8 @@ async function fetchConcerts() {
             // Validasi tanggal konser
             const concertDate = data.tanggal_konser
                 ? new Date(data.tanggal_konser).toLocaleDateString('id-ID', {
-                      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-                  })
+                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+                })
                 : 'Tanggal tidak tersedia';
 
             // Ambil nama lokasi dari objek lokasi
@@ -43,7 +43,7 @@ async function fetchConcerts() {
 
             // Buat HTML kartu
             const cardHTML = `
-                <div class="card">
+                <div class="card" data-id="${data.id_konser}">
                     <img src="${imagePath}" alt="${data.nama_konser || 'Nama Konser Tidak Tersedia'}">
                     <h3>${data.nama_konser || 'Nama Konser Tidak Tersedia'}</h3>
                     <p><i class="fas fa-tag"></i> Rp ${data.harga ? data.harga.toLocaleString('id-ID') : '0'}</p>
@@ -98,24 +98,6 @@ function handleOrderClick(event) {
         window.location.href = `detail-konser.html?id=${concertId}`;
     }
 }
-
-// Update tombol "Pesan Sekarang" dengan data ID
-concerts.forEach(data => {
-    const cardHTML = `
-        <div class="card" data-id="${data.id}">
-            <img src="${imagePath}" alt="${data.nama_konser || 'Nama Konser Tidak Tersedia'}">
-            <h3>${data.nama_konser || 'Nama Konser Tidak Tersedia'}</h3>
-            <p><i class="fas fa-tag"></i> Rp ${data.harga ? data.harga.toLocaleString('id-ID') : '0'}</p>
-            <p><i class="fas fa-map-marker-alt"></i> ${lokasiName}</p>
-            <p><i class="fas fa-calendar-alt"></i> ${concertDate}</p>
-            <p><i class="fas fa-ticket-alt"></i> ${data.jumlah_tiket || 0} Tiket</p>
-            <a href="#" class="btn-card">
-                <i class="fas fa-shopping-cart"></i> Pesan Sekarang
-            </a>
-        </div>
-    `;
-    cardsContainer.insertAdjacentHTML('beforeend', cardHTML);
-});
 
 // Panggil fungsi fetchConcerts saat halaman dimuat
 document.addEventListener('DOMContentLoaded', fetchConcerts);
