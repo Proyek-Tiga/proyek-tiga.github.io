@@ -26,25 +26,46 @@ body {
     align-items: center;
 }
 
-.navbar-btn {
-    margin-left: 15px;
-    color: white;
+/* CSS untuk navbar */
+.navbar-icon {
+    display: inline-flex;
+    align-items: center;
+    color: #fff;
     text-decoration: none;
     font-size: 16px;
-    display: flex;
+    margin-right: 15px;
+    gap: 8px;
+}
+
+.navbar-btn {
+    display: inline-flex;
     align-items: center;
-    padding: 8px 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 20px;
     border-radius: 5px;
-    background-color: #4CAF50;
-    transition: background-color 0.3s ease;
+    margin-right: 15px;
 }
 
-.navbar-btn i {
-    margin-right: 8px;
+/* Warna tombol Tiket */
+.tiket-btn {
+    background-color: #007bff; /* Sesuaikan warna */
+    gap: 8px;
 }
 
-.navbar-btn:hover {
-    background-color: #45a049;
+.tiket-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Warna tombol Keluar */
+.keluar-btn {
+    background-color: #dc3545; /* Sesuaikan warna */
+    gap: 8px;
+}
+
+.keluar-btn:hover {
+    background-color: #c82333;
 }
 
 /* Slider Section */
