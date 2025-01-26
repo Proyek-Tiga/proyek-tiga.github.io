@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            const user = JSON.parse(atob(token.split(".")[1])); // Decode JWT untuk user_id
+            const user = JSON.parse(atob(token.split(".")[1])); // Decode JWT untuk mendapatkan user_id
             const user_id = user.user_id;
 
             const paymentURL = `http://localhost:5000/api/payment/${transactionId}`;
@@ -77,8 +77,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const paymentResult = await response.json();
             console.log("Respon Pembayaran:", paymentResult); // Debugging
 
-            alert("Pembayaran berhasil!");
-            window.location.href = "success.html"; // Redirect ke halaman sukses
+            if (paymentResult.snap_url) {
+                // Redirect ke halaman pembayaran Midtrans
+                window.location.href = paymentResult.snap_url;
+            } else {
+                alert("Gagal mendapatkan URL pembayaran. Coba lagi.");
+            }
 
         } catch (error) {
             console.error("Error saat melakukan pembayaran:", error);
