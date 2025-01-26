@@ -98,6 +98,12 @@ async function fetchTickets() {
             const ticketId = target.getAttribute("data-id");
             const ticket = tickets.find(t => t.id == ticketId);
 
+            // Cek apakah tiket ditemukan
+            if (!ticket) {
+                console.error(`Tiket dengan ID ${ticketId} tidak ditemukan!`);
+                return;
+            }
+
             if (target.classList.contains("increase") && cart[ticketId] < ticket.jumlah_tiket) {
                 cart[ticketId]++;
             } else if (target.classList.contains("decrease") && cart[ticketId] > 0) {
