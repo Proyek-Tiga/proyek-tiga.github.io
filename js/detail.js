@@ -5,7 +5,7 @@ const concertId = urlParams.get('id');
 console.log(concertId);  // Cek apakah ID konser terambil dengan benar
 
 // URL API untuk mendapatkan detail konser berdasarkan ID
-const apiDetailURL = `https://tiket-backend-theta.vercel.app/${concertId}`;
+const apiDetailURL = `https://tiket-backend-theta.vercel.app/api/konser/${concertId}`;
 
 // Fungsi untuk fetch data detail konser
 async function fetchConcertDetail() {
