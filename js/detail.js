@@ -70,17 +70,25 @@ async function fetchTickets() {
         }
 
         const tickets = await response.json();
-        console.log(tickets); // Cek apakah data tiket berhasil didapatkan
+        console.log("Data tiket yang diterima:", tickets); 
 
         const ticketListContainer = document.querySelector('.ticket-list');
+        if (!ticketListContainer) {
+            console.error("Elemen .ticket-list tidak ditemukan di halaman.");
+            return;
+        }
 
-        // Jika tidak ada tiket tersedia
-        if (!tickets || tickets.length === 0) {
+        // Periksa apakah tickets adalah array
+        if (!Array.isArray(tickets)) {
+            console.warn("Data tiket bukan array, mengonversi ke array.");
+            tickets = [tickets]; // Ubah menjadi array jika bukan array
+        }
+
+        if (tickets.length === 0) {
             ticketListContainer.innerHTML = '<p>Tidak ada tiket tersedia untuk konser ini.</p>';
             return;
         }
 
-        // Menampilkan tiket dalam bentuk kartu
         ticketListContainer.innerHTML = tickets.map(ticket => `
             <div class="ticket-card">
                 <h4>${ticket.nama_tiket}</h4>
