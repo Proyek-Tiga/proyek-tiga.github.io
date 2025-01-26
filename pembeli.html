@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ausa Beats - Pemesanan Tiket</title>
+    <link rel="stylesheet" href="css/pembeli.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <i class="fas fa-guitar"></i> AuSa Beats
+            </div>
+            <div class="navbar-right">
+                <a href="#" id="tickets-btn" class="navbar-btn"><i class="fas fa-ticket-alt"></i> Pembeli</a>
+                <a href="#" id="tickets-btn" class="navbar-btn"><i class="fas fa-ticket-alt"></i> Tiket</a>
+                <a href="https://proyek-tiga.github.io/login" id="logout-btn" class="navbar-btn"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Slider Section -->
+        <section class="slider">
+            <div class="slider-container">
+                <div class="slide active">
+                    <img src="img/bg1.png" alt="Pamflet 1">
+                </div>
+                <div class="slide">
+                    <img src="img/bg2.png" alt="Pamflet 2">
+                </div>
+                <div class="slide">
+                    <img src="img/bg3.jpg" alt="Pamflet 3">
+                </div>
+            </div>
+            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="next" onclick="moveSlide(1)">&#10095;</button>
+        </section>
+
+        <!-- Card Box Section -->
+        <section class="concert-cards">
+            <h2>Daftar Konser</h2>
+            <div class="cards-container">
+            </div>
+        </section>
+    </main>
+</body>
+
+<script src="js/index.js"></script>
+<script src="js/konser.js"></script>
+</html>
