@@ -29,12 +29,18 @@ async function fetchConcertDetail() {
 
         // Menampilkan informasi detail konser
         concertDetailsContainer.innerHTML = `
-            <h1>${concert.nama_konser || 'Nama Konser Tidak Tersedia'}</h1>
-            <img src="${concert.image || 'default-image.jpg'}" alt="${concert.nama_konser || 'Nama Konser Tidak Tersedia'}">
-            <p><strong>Harga:</strong> Rp ${concert.harga ? concert.harga.toLocaleString('id-ID') : '0'}</p>
-            <p><strong>Lokasi:</strong> ${concert.lokasi ? concert.lokasi.lokasi : 'Lokasi Tidak Tersedia'}</p>
-            <p><strong>Tanggal:</strong> ${new Date(concert.tanggal_konser).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
-            <p><strong>Jumlah Tiket:</strong> ${concert.jumlah_tiket || 0} Tiket</p>
+            <h2>Detail Konser</h2>
+            <h3>${concert.nama_konser || 'Nama Konser Tidak Tersedia'}</h3>
+            <div class="concert-info">
+                <img src="${concert.image || 'default-image.jpg'}" alt="${concert.nama_konser || 'Nama Konser Tidak Tersedia'}">
+                <div class="info">
+                    <p><strong>Harga:</strong> Rp ${concert.harga ? concert.harga.toLocaleString('id-ID') : '0'}</p>
+                    <p><strong>Lokasi:</strong> ${concert.lokasi_name || 'Lokasi Tidak Tersedia'}</p>
+                    <p><strong>Tanggal:</strong> ${new Date(concert.tanggal_konser).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p><strong>Jumlah Tiket:</strong> ${concert.jumlah_tiket || 0} Tiket</p>
+                    <p><strong>Nama Penyelenggara:</strong> ${concert.user_name || 'Nama Pengguna Tidak Tersedia'}</p>
+                </div>
+            </div>
         `;
     } catch (error) {
         console.error("Gagal memuat data konser:", error);
