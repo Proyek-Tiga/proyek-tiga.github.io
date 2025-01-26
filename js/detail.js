@@ -61,63 +61,27 @@ async function fetchConcertDetail() {
     }
 }
 
+// Panggil fungsi fetchConcertDetail saat halaman dimuat
+document.addEventListener('DOMContentLoaded', () => {
+    fetchConcertDetail();
+    fetchTickets(); // Tambahkan ini agar tiket ikut dimuat
+});
+
 // Fungsi untuk fetch data tiket
 async function fetchTickets() {
     try {
         const response = await fetch(apiTiketURL);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        let tickets = await response.json();  // Ubah dari const ke let
-        console.log("Data tiket yang diterima:", tickets);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        
+        let tickets = await response.json();
+        if (!Array.isArray(tickets)) tickets = [tickets];
 
         const ticketListContainer = document.querySelector('.ticket-list');
         const orderSummaryContainer = document.querySelector('.order-summary');
-        if (!ticketListContainer) {
-            console.error("Elemen .ticket-list tidak ditemukan di halaman.");
-            return;
-        }
-
-        // Periksa apakah tickets adalah array
-        if (!Array.isArray(tickets)) {
-            console.warn("Data tiket bukan array, mengonversi ke array.");
-            tickets = [tickets]; // Sekarang bisa diubah karena pakai let
-        }
-
-        if (tickets.length === 0) {
-            ticketListContainer.innerHTML = '<p>Tidak ada tiket tersedia untuk konser ini.</p>';
-            return;
-        }
-
-        let cart = {}; // Menyimpan jumlah tiket yang dipilih
-
-        function updateOrderSummary() {
-            let total = 0;
-            let summaryHTML = '<h3>Pesanan:</h3><ul>';
-            
-            Object.keys(cart).forEach(ticketId => {
-                if (cart[ticketId] > 0) {
-                    const ticket = tickets.find(t => t.id == ticketId);
-                    const subtotal = ticket.harga * cart[ticketId];
-                    total += subtotal;
-                    summaryHTML += `
-                        <li>
-                            ${ticket.nama_tiket} - ${cart[ticketId]} x Rp ${ticket.harga.toLocaleString('id-ID')} = Rp ${subtotal.toLocaleString('id-ID')}
-                        </li>
-                    `;
-                }
-            });
-            
-            total *= 1.5; // Tambahkan keuntungan 1.5x
-            summaryHTML += `</ul><h3>Total Pesanan: Rp ${total.toLocaleString('id-ID')}</h3>`;
-            summaryHTML += '<button class="order-button">Order Now</button>';
-            
-            orderSummaryContainer.innerHTML = summaryHTML;
-        }
-
+        let cart = {}; 
+        
         ticketListContainer.innerHTML = tickets.map(ticket => {
-            cart[ticket.id] = 0; // Inisialisasi kuantitas
+            cart[ticket.id] = 0; 
             return `
                 <div class="ticket-card" data-id="${ticket.id}">
                     <h4>${ticket.nama_tiket}</h4>
@@ -131,40 +95,50 @@ async function fetchTickets() {
                 </div>
             `;
         }).join('');
-
-        document.querySelectorAll(".increase").forEach(button => {
-            button.addEventListener("click", () => {
-                const ticketId = button.getAttribute("data-id");
-                if (cart[ticketId] < tickets.find(t => t.id == ticketId).jumlah_tiket) {
-                    cart[ticketId]++;
-                    document.getElementById(`quantity-${ticketId}`).textContent = cart[ticketId];
-                    updateOrderSummary();
-                }
-            });
+        
+        ticketListContainer.addEventListener("click", event => {
+            const target = event.target;
+            if (!target.classList.contains("increase") && !target.classList.contains("decrease")) return;
+            
+            const ticketId = target.getAttribute("data-id");
+            const ticket = tickets.find(t => t.id == ticketId);
+            
+            if (target.classList.contains("increase") && cart[ticketId] < ticket.jumlah_tiket) {
+                cart[ticketId]++;
+            } else if (target.classList.contains("decrease") && cart[ticketId] > 0) {
+                cart[ticketId]--;
+            }
+            document.getElementById(`quantity-${ticketId}`).textContent = cart[ticketId];
+            updateOrderSummary(cart, tickets, orderSummaryContainer);
         });
-
-        document.querySelectorAll(".decrease").forEach(button => {
-            button.addEventListener("click", () => {
-                const ticketId = button.getAttribute("data-id");
-                if (cart[ticketId] > 0) {
-                    cart[ticketId]--;
-                    document.getElementById(`quantity-${ticketId}`).textContent = cart[ticketId];
-                    updateOrderSummary();
-                }
-            });
-        });
-
-        updateOrderSummary();
-
+        
+        updateOrderSummary(cart, tickets, orderSummaryContainer);
     } catch (error) {
         console.error("Gagal memuat data tiket:", error);
         document.querySelector('.ticket-list').innerHTML = `<p class="error-message">Terjadi kesalahan saat memuat tiket. Silakan coba lagi nanti.</p>`;
     }
 }
 
-// Panggil fungsi fetchConcertDetail saat halaman dimuat
-document.addEventListener('DOMContentLoaded', () => {
-    fetchConcertDetail();
-    fetchTickets(); // Tambahkan ini agar tiket ikut dimuat
-});
+function updateOrderSummary(cart, tickets, orderSummaryContainer) {
+    let total = 0;
+    let summaryHTML = '<h3>Pesanan:</h3><ul>';
+    
+    Object.keys(cart).forEach(ticketId => {
+        if (cart[ticketId] > 0) {
+            const ticket = tickets.find(t => t.id == ticketId);
+            const subtotal = ticket.harga * cart[ticketId];
+            total += subtotal;
+            summaryHTML += `
+                <li>
+                    ${ticket.nama_tiket} - ${cart[ticketId]} x Rp ${ticket.harga.toLocaleString('id-ID')} = Rp ${subtotal.toLocaleString('id-ID')}
+                </li>
+            `;
+        }
+    });
+    
+    summaryHTML += `</ul><h3>Total Pesanan: Rp ${total.toLocaleString('id-ID')}</h3>`;
+    summaryHTML += '<button class="order-button">Order Now</button>';
+    orderSummaryContainer.innerHTML = summaryHTML;
+}
+
 

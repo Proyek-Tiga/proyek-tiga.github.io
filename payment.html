@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran Konser</title>
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/pembeli.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <i class="fas fa-guitar"></i> AuSa Beats
+            </div>
+            <div class="navbar-right">
+                <!-- Pembeli, ikon diganti menjadi orang, bukan button -->
+                <a href="#" class="navbar-icon"><i class="fas fa-user"></i> Pembeli</a>
+                <!-- Tiket dengan warna tombol khusus -->
+                <a href="#" id="tickets-btn" class="navbar-btn tiket-btn"><i class="fas fa-ticket-alt"></i> Tiket</a>
+                <!-- Keluar dengan warna tombol khusus -->
+                <a href="https://proyek-tiga.github.io/login" id="logout-btn" class="navbar-btn keluar-btn"><i
+                        class="fas fa-sign-out-alt"></i> Keluar</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="concert-details">
+            <!-- Informasi konser akan dimuat di sini -->
+        </div>
+
+        <div class="ticket-list"></div>
+
+        <div class="order-summary">
+            <h2>Pesanan</h2>
+            <div class="order-items"></div>
+            <p><strong>Total Pesanan:</strong> <span id="total-price">Rp 0</span></p>
+            <button id="order-now">Order Now</button>
+        </div>
+
+    </main>
+</body>
+<script src="js/detail.js"></script>
+
+</html>
