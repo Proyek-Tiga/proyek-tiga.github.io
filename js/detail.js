@@ -7,6 +7,9 @@ console.log(concertId);  // Cek apakah ID konser terambil dengan benar
 // URL API untuk mendapatkan detail konser berdasarkan ID
 const apiDetailURL = `https://tiket-backend-theta.vercel.app/api/konser/${concertId}`;
 
+// URL API untuk mendapatkan tiket berdasarkan konser ID
+const apiTiketURL = `https://tiket-backend-theta.vercel.app/api/tiket/konser/${concertId}`;
+
 // Fungsi untuk fetch data detail konser
 async function fetchConcertDetail() {
     try {
@@ -55,6 +58,40 @@ async function fetchConcertDetail() {
         console.error("Gagal memuat data konser:", error);
         const concertDetailsContainer = document.querySelector('.concert-details');
         concertDetailsContainer.innerHTML = `<p class="error-message">Terjadi kesalahan saat memuat detail konser. Silakan coba lagi nanti.</p>`;
+    }
+}
+
+// Fungsi untuk fetch data tiket
+async function fetchTickets() {
+    try {
+        const response = await fetch(apiTiketURL);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const tickets = await response.json();
+        console.log(tickets); // Cek apakah data tiket berhasil didapatkan
+
+        const ticketListContainer = document.querySelector('.ticket-list');
+
+        // Jika tidak ada tiket tersedia
+        if (!tickets || tickets.length === 0) {
+            ticketListContainer.innerHTML = '<p>Tidak ada tiket tersedia untuk konser ini.</p>';
+            return;
+        }
+
+        // Menampilkan tiket dalam bentuk kartu
+        ticketListContainer.innerHTML = tickets.map(ticket => `
+            <div class="ticket-card">
+                <h4>${ticket.nama_tiket}</h4>
+                <p><strong>Harga:</strong> Rp ${ticket.harga.toLocaleString('id-ID')}</p>
+                <p><strong>Jumlah Tiket:</strong> ${ticket.jumlah_tiket} Tiket</p>
+                <button class="buy-button">Beli Tiket</button>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error("Gagal memuat data tiket:", error);
+        document.querySelector('.ticket-list').innerHTML = `<p class="error-message">Terjadi kesalahan saat memuat tiket. Silakan coba lagi nanti.</p>`;
     }
 }
 
