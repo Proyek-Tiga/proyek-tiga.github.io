@@ -3,9 +3,10 @@ const token = localStorage.getItem("authToken");
 document.addEventListener("DOMContentLoaded", function () {
     const concertDetailsRaw = localStorage.getItem("concertDetails");
     const orderDetailsRaw = localStorage.getItem("orderDetails");
+    const transactionId = localStorage.getItem("transactionId"); // Ambil id transaksi
 
-    if (!concertDetailsRaw || !orderDetailsRaw) {
-        console.error("Data konser atau order tidak ditemukan di localStorage!");
+    if (!concertDetailsRaw || !orderDetailsRaw || !transactionId) {
+        console.error("Data konser, order, atau transaksi tidak ditemukan di localStorage!");
         return;
     }
 
@@ -19,18 +20,17 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    console.log("Concert Details from localStorage:", concertDetails);
-    console.log("Order Details from localStorage:", orderDetails);
+    console.log("Concert Details:", concertDetails);
+    console.log("Order Details:", orderDetails);
+    console.log("Transaction ID:", transactionId); // Debugging
 
-    // Pastikan orderDetails adalah array dan ambil elemen pertama
     if (Array.isArray(orderDetails) && orderDetails.length > 0) {
-        orderDetails = orderDetails[0]; // Ambil elemen pertama
+        orderDetails = orderDetails[0];
     } else {
         console.error("Struktur orderDetails tidak valid!");
         return;
     }
 
-    // Tampilkan data konser
     document.getElementById("concert-name").textContent = concertDetails.nama_konser ?? "Data tidak tersedia";
     document.getElementById("concert-location").textContent = concertDetails.lokasi_name ?? "Lokasi tidak tersedia";
     document.getElementById("concert-date").textContent = new Date(concertDetails.tanggal_konser).toLocaleDateString('id-ID', {
@@ -38,14 +38,51 @@ document.addEventListener("DOMContentLoaded", function () {
     }) ?? "Tanggal tidak tersedia";
     document.getElementById("concert-price").textContent = `Rp ${concertDetails.harga.toLocaleString('id-ID')}` ?? "Data tidak tersedia";
 
-    // Tampilkan gambar konser
     document.querySelector(".concert-info img").src = concertDetails.image;
     document.querySelector(".concert-info img").alt = concertDetails.nama_konser;
 
-    // Menampilkan tiket yang dipesan
     let total = orderDetails.subtotal;
-    let ticketListHTML = `<li><strong>${orderDetails.nama_tiket}</strong>: ${orderDetails.jumlah}x - Rp ${orderDetails.harga.toLocaleString('id-ID')}</li>`;
+    let ticketListHTML = `<li><strong>${orderDetails.nama_tiket}</strong>: ${orderDetails.qty}x - Rp ${orderDetails.harga.toLocaleString('id-ID')}</li>`;
 
     document.querySelector(".order-items ul").innerHTML = ticketListHTML;
     document.getElementById("total-price").textContent = `Rp ${total.toLocaleString('id-ID')}`;
+
+    // Tambahkan event listener untuk tombol pembayaran
+    document.getElementById("pay-now").addEventListener("click", async function () {
+        if (!token) {
+            alert("Anda harus login terlebih dahulu!");
+            return;
+        }
+
+        try {
+            const user = JSON.parse(atob(token.split(".")[1])); // Decode JWT untuk user_id
+            const user_id = user.user_id;
+
+            const paymentURL = `http://localhost:5000/api/payment/${transactionId}`;
+            const paymentData = { user_id: user_id };
+
+            const response = await fetch(paymentURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(paymentData)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Gagal melakukan pembayaran! Status: ${response.status}`);
+            }
+
+            const paymentResult = await response.json();
+            console.log("Respon Pembayaran:", paymentResult); // Debugging
+
+            alert("Pembayaran berhasil!");
+            window.location.href = "success.html"; // Redirect ke halaman sukses
+
+        } catch (error) {
+            console.error("Error saat melakukan pembayaran:", error);
+            alert("Terjadi kesalahan saat melakukan pembayaran. Silakan coba lagi.");
+        }
+    });
 });

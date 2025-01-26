@@ -237,6 +237,7 @@ document.addEventListener("click", async function (event) {
 
             // Simpan data transaksi ke localStorage untuk halaman pembayaran
             localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+            localStorage.setItem("transactionId", transaksiResult.transaksi_id); // Simpan id_transaksi
 
             // Redirect ke halaman pembayaran
             window.location.href = "payment.html";
