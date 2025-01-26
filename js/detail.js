@@ -65,6 +65,21 @@ async function fetchConcertDetail() {
 document.addEventListener('DOMContentLoaded', () => {
     fetchConcertDetail();
     fetchTickets(); // Tambahkan ini agar tiket ikut dimuat
+
+    // Ambil elemen tombol "Order Now"
+    const orderButton = document.getElementById('order-now');
+    orderButton.addEventListener('click', () => {
+        // Ambil ID konser dari URL
+        const concertId = new URLSearchParams(window.location.search).get('id');
+
+        // Jika ID konser ada, arahkan ke halaman payment.html dengan ID tersebut
+        if (concertId) {
+            const paymentUrl = `https://proyek-tiga.github.io/payment.html?id=${concertId}`;
+            window.location.href = paymentUrl;  // Arahkan ke halaman pembayaran
+        } else {
+            alert('ID konser tidak ditemukan!');
+        }
+    });
 });
 
 // Fungsi untuk fetch data tiket
