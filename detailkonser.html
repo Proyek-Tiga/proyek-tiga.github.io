@@ -1,79 +1,39 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Konser</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/pembeli.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
 </head>
+
 <body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <i class="fas fa-guitar"></i> AuSa Beats
+            </div>
+            <div class="navbar-right">
+                <!-- Pembeli, ikon diganti menjadi orang, bukan button -->
+                <a href="#" class="navbar-icon"><i class="fas fa-user"></i> Pembeli</a>
+                <!-- Tiket dengan warna tombol khusus -->
+                <a href="#" id="tickets-btn" class="navbar-btn tiket-btn"><i class="fas fa-ticket-alt"></i> Tiket</a>
+                <!-- Keluar dengan warna tombol khusus -->
+                <a href="https://proyek-tiga.github.io/login" id="logout-btn" class="navbar-btn keluar-btn"><i
+                        class="fas fa-sign-out-alt"></i> Keluar</a>
+            </div>
+        </div>
+    </header>
 
-    <div id="concert-details">
-        <!-- Informasi konser akan dimuat di sini -->
-    </div>
-
-    <script>
-        // Fungsi untuk mendapatkan ID konser dari URL
-        function getConcertIdFromUrl() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('id');
-        }
-
-        // Fungsi untuk memuat detail konser dari API berdasarkan ID
-        async function fetchConcertDetails(id) {
-            const apiURL = `https://tiket-backend-theta.vercel.app/api/konser-approved/${id}`;
-
-            try {
-                const response = await fetch(apiURL);
-                if (!response.ok) {
-                    throw new Error('Konser tidak ditemukan!');
-                }
-
-                const concert = await response.json();
-                displayConcertDetails(concert);
-            } catch (error) {
-                console.error('Gagal memuat detail konser:', error);
-                document.getElementById('concert-details').innerHTML = `<p>Detail konser tidak dapat dimuat. Coba lagi nanti.</p>`;
-            }
-        }
-
-        // Fungsi untuk menampilkan detail konser di halaman
-        function displayConcertDetails(concert) {
-            const concertDetailsElement = document.getElementById('concert-details');
-
-            // Validasi dan format data konser
-            const imagePath = concert.image && concert.image.startsWith("http")
-                ? concert.image
-                : `http://localhost:5000/images/${concert.image || "default-image.jpg"}`;
-
-            const concertDate = concert.tanggal_konser
-                ? new Date(concert.tanggal_konser).toLocaleDateString('id-ID', {
-                      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-                  })
-                : 'Tanggal tidak tersedia';
-
-            const locationName = concert.lokasi.lokasi || 'Lokasi Tidak Tersedia';
-
-            // Menampilkan detail konser
-            concertDetailsElement.innerHTML = `
-                <div class="concert-detail-card">
-                    <img src="${imagePath}" alt="${concert.nama_konser}">
-                    <h2>${concert.nama_konser}</h2>
-                    <p><i class="fas fa-tag"></i> Rp ${concert.harga ? concert.harga.toLocaleString('id-ID') : '0'}</p>
-                    <p><i class="fas fa-map-marker-alt"></i> ${locationName}</p>
-                    <p><i class="fas fa-calendar-alt"></i> ${concertDate}</p>
-                    <p><i class="fas fa-ticket-alt"></i> Tiket: ${concert.jumlah_tiket || 0}</p>
-                    <a href="#" class="btn-order">Pesan Tiket</a>
-                </div>
-            `;
-        }
-
-        // Ambil ID konser dari URL dan muat detail konser
-        const concertId = getConcertIdFromUrl();
-        if (concertId) {
-            fetchConcertDetails(concertId);
-        }
-    </script>
-
+    <main>
+        <div class="concert-details">
+            <!-- Informasi konser akan dimuat di sini -->
+        </div>
+    </main>
 </body>
+<script src="js/detail.js"></script>
+
 </html>
