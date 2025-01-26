@@ -157,8 +157,19 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchTickets();
 });
 
-document.addEventListener("click", function (event) {
+document.addEventListener("click", async function (event) {
     if (event.target.id === "order-now") {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            alert("Anda harus login terlebih dahulu!");
+            return;
+        }
+
+        // Decode token untuk mendapatkan user_id
+        const user = JSON.parse(atob(token.split(".")[1])); // Dekode payload JWT
+        const user_id = user.user_id;
+        console.log("User ID:", user_id); // Debugging
+
         // Ambil elemen tiket yang dipesan
         let cart = {};
         document.querySelectorAll(".quantity-control .quantity").forEach(el => {
@@ -170,32 +181,73 @@ document.addEventListener("click", function (event) {
         });
 
         // Ambil detail tiket dari API yang sebelumnya sudah di-load
-        fetch(apiTiketURL)
-            .then(response => response.json())
-            .then(tickets => {
-                if (!Array.isArray(tickets)) tickets = [tickets];
+        try {
+            const response = await fetch(apiTiketURL);
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-                // Buat array berisi tiket yang dipesan
-                const orderDetails = Object.keys(cart).map(ticketId => {
-                    const ticket = tickets.find(t => t.tiket_id == ticketId);
-                    return {
-                        tiket_id: ticket.tiket_id,
-                        nama_tiket: ticket.nama_tiket,
-                        harga: ticket.harga,
-                        jumlah: cart[ticketId],
-                        subtotal: ticket.harga * cart[ticketId]
-                    };
-                });
+            let tickets = await response.json();
+            if (!Array.isArray(tickets)) tickets = [tickets];
 
-                // Simpan data pesanan ke localStorage
-                localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+            // Buat array berisi tiket yang dipesan
+            const orderDetails = Object.keys(cart).map(ticketId => {
+                const ticket = tickets.find(t => t.tiket_id == ticketId);
+                return {
+                    tiket_id: ticket.tiket_id,
+                    nama_tiket: ticket.nama_tiket,
+                    harga: ticket.harga,
+                    qty: cart[ticketId],
+                    subtotal: ticket.harga * cart[ticketId]
+                };
+            });
 
-                // Arahkan ke halaman payment
-                window.location.href = "payment.html";
-            })
-            .catch(error => console.error("Gagal mengambil data tiket:", error));
+            // Hitung total harga
+            const totalHarga = orderDetails.reduce((sum, item) => sum + item.subtotal, 0);
+            if (orderDetails.length === 0) {
+                alert("Pilih setidaknya satu tiket sebelum melakukan pemesanan.");
+                return;
+            }
+
+            // Data yang akan dikirim ke backend
+            const transaksiData = {
+                user_id: user_id,
+                tiket_id: orderDetails[0].tiket_id, // Ambil tiket pertama (asumsi hanya satu transaksi)
+                qty: orderDetails[0].qty,
+                harga: totalHarga,
+                keterangan: "Berhasil"
+            };
+
+            console.log("Data Transaksi:", transaksiData); // Debugging
+
+            // Kirim POST request ke API transaksi
+            const transaksiResponse = await fetch("https://tiket-backend-theta.vercel.app/api/transaksi", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}` // Kirim token untuk autentikasi
+                },
+                body: JSON.stringify(transaksiData)
+            });
+
+            if (!transaksiResponse.ok) {
+                throw new Error(`Gagal membuat transaksi! Status: ${transaksiResponse.status}`);
+            }
+
+            const transaksiResult = await transaksiResponse.json();
+            console.log("Respon API:", transaksiResult); // Debugging
+
+            // Simpan data transaksi ke localStorage untuk halaman pembayaran
+            localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+
+            // Redirect ke halaman pembayaran
+            window.location.href = "payment.html";
+
+        } catch (error) {
+            console.error("Error saat memproses transaksi:", error);
+            alert("Terjadi kesalahan saat melakukan transaksi. Silakan coba lagi.");
+        }
     }
 });
+
 
 
 
