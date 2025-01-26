@@ -1,17 +1,29 @@
 const token = localStorage.getItem("authToken");
 
 document.addEventListener("DOMContentLoaded", function () {
-    const orderDetails = JSON.parse(localStorage.getItem("orderDetails"));
+    const orderDetailsRaw = localStorage.getItem("orderDetails");
 
-    if (!orderDetails) {
+    if (!orderDetailsRaw) {
         console.error("Order details not found in localStorage!");
         return;
     }
 
-    document.getElementById("concert-name").textContent = orderDetails.concertName || "Data tidak tersedia";
-    document.getElementById("concert-location").textContent = orderDetails.concertLocation || "Data tidak tersedia";
-    document.getElementById("concert-date").textContent = orderDetails.concertDate || "Data tidak tersedia";
-    document.getElementById("concert-price").textContent = orderDetails.concertPrice || "Data tidak tersedia";
+    let orderDetails;
+
+    try {
+        orderDetails = JSON.parse(orderDetailsRaw);
+    } catch (error) {
+        console.error("Failed to parse orderDetails:", error);
+        return;
+    }
+
+    console.log("Order Details from localStorage:", orderDetails);
+
+    // Pastikan semua field tersedia sebelum mengaksesnya
+    document.getElementById("concert-name").textContent = orderDetails.concertName ?? "Data tidak tersedia";
+    document.getElementById("concert-location").textContent = orderDetails.concertLocation ?? "Data tidak tersedia";
+    document.getElementById("concert-date").textContent = orderDetails.concertDate ?? "Data tidak tersedia";
+    document.getElementById("concert-price").textContent = orderDetails.concertPrice ?? "Data tidak tersedia";
 
     let total = 0;
     let ticketListHTML = "";
