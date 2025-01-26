@@ -293,16 +293,17 @@ h3 {
 }
 
 .ticket-card {
-    background: #ffebcc;
+    background: #c9ddee;
     padding: 15px;
     border-radius: 8px;
     width: 200px;
     text-align: center;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    color: #000;
 }
 
 .ticket-card h4 {
-    color: #e67e22;
+    color: #27568b;
     font-size: 18px;
     margin-bottom: 5px;
 }
