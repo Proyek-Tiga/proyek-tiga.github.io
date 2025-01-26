@@ -5,6 +5,15 @@ body {
     padding: 0;
 }
 
+/* Wrapper untuk seluruh konten */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Pusatkan semua elemen */
+    gap: 20px; /* Beri jarak antar elemen */
+    padding: 20px;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -317,6 +326,7 @@ h3 {
     width: 300px;
     text-align: center;
     font-family: 'Poppins', sans-serif;
+    margin-top: 20px; /* Jarak dari elemen di atasnya */
 }
 
 .order-summary h3 {
@@ -334,6 +344,7 @@ h3 {
     font-size: 14px;
     padding: 8px;
     border-bottom: 1px solid #eee;
+    color: #000;
 }
 
 #total-price {
@@ -344,7 +355,7 @@ h3 {
 
 /* Tombol Order */
 #order-now {
-    background: #2a9d8f;
+    background: #27568b;
     color: white;
     border: none;
     padding: 12px;
@@ -357,7 +368,7 @@ h3 {
 }
 
 #order-now:hover {
-    background: #21867a;
+    background: #47a1c4;
 }
 
 /* Gaya untuk quantity control */
@@ -370,7 +381,7 @@ h3 {
 }
 
 .quantity-control button {
-    background: #e76f51;
+    background: #27568b;
     color: white;
     border: none;
     width: 32px;
@@ -382,7 +393,7 @@ h3 {
 }
 
 .quantity-control button:hover {
-    background: #d64533;
+    background: #47a1c4;
 }
 
 .quantity {
