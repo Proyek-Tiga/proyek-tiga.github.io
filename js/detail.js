@@ -69,8 +69,8 @@ async function fetchTickets() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const tickets = await response.json();
-        console.log("Data tiket yang diterima:", tickets); 
+        let tickets = await response.json();  // Ubah dari const ke let
+        console.log("Data tiket yang diterima:", tickets);
 
         const ticketListContainer = document.querySelector('.ticket-list');
         if (!ticketListContainer) {
@@ -81,7 +81,7 @@ async function fetchTickets() {
         // Periksa apakah tickets adalah array
         if (!Array.isArray(tickets)) {
             console.warn("Data tiket bukan array, mengonversi ke array.");
-            tickets = [tickets]; // Ubah menjadi array jika bukan array
+            tickets = [tickets]; // Sekarang bisa diubah karena pakai let
         }
 
         if (tickets.length === 0) {
