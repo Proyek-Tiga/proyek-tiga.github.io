@@ -95,7 +95,7 @@ function handleOrderClick(event) {
         const concertId = event.target.closest('.card').dataset.id;
 
         // Arahkan ke halaman detail konser
-        window.location.href = `detail-konser.html?id=${concertId}`;
+        window.location.href = `https://proyek-tiga.github.io/detailkonser.html?id=${concertId}`;
     }
 }
 
