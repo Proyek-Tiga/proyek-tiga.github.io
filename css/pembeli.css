@@ -308,19 +308,89 @@ h3 {
     margin-bottom: 5px;
 }
 
-.buy-button {
-    background: #e67e22;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-size: 14px;
+/* Gaya untuk order summary */
+.order-summary {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
 }
 
-.buy-button:hover {
-    background: #d35400;
+.order-summary h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.order-summary ul {
+    list-style: none;
+    padding: 0;
+}
+
+.order-summary li {
+    font-size: 14px;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+#total-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2a9d8f;
+}
+
+/* Tombol Order */
+#order-now {
+    background: #2a9d8f;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.3s ease;
+}
+
+#order-now:hover {
+    background: #21867a;
+}
+
+/* Gaya untuk quantity control */
+.quantity-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quantity-control button {
+    background: #e76f51;
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.quantity-control button:hover {
+    background: #d64533;
+}
+
+.quantity {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    min-width: 24px;
+    text-align: center;
 }
 
 /* Mobile-friendly */
