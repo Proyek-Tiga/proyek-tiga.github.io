@@ -21,6 +21,8 @@ async function fetchConcertDetail() {
         const concert = await response.json();
         console.log(concert);  // Cek apakah data konser berhasil didapatkan
 
+        localStorage.setItem("concertDetails", JSON.stringify(concert));
+
         // Ambil elemen untuk menampilkan detail konser
         const concertDetailsContainer = document.querySelector('.concert-details');
 
