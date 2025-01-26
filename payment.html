@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pembayaran Konser</title>
     <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/pembeli.css">
+    <link rel="stylesheet" href="css/payment.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
 </head>
 
@@ -29,21 +29,35 @@
     </header>
 
     <main>
-        <div class="concert-details">
-            <!-- Informasi konser akan dimuat di sini -->
+        <div class="main-content">
+            <div class="concert-details">
+                <h2>Detail Konser</h2>
+                <div class="concert-info">
+                    <img src="path-to-image.jpg" alt="Concert Image">
+                    <div class="info">
+                        <p><strong>Nama Konser:</strong> <span id="concert-name">Concert Name</span></p>
+                        <p><strong>Lokasi:</strong> <span id="concert-location">Concert Location</span></p>
+                        <p><strong>Tanggal:</strong> <span id="concert-date">Date</span></p>
+                        <p><strong>Harga:</strong> <span id="concert-price">Rp 0</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-summary">
+                <h3>Pesanan</h3>
+                <div class="order-items">
+                    <ul>
+                        <li><strong>Tiket:</strong> <span id="ticket-name">Tiket 1</span> - <span
+                                id="ticket-quantity">1</span> x <span id="ticket-price">Rp 0</span></li>
+                        <!-- Add more ticket items here dynamically -->
+                    </ul>
+                </div>
+                <p class="total-price">Total Pesanan: <span id="total-price">Rp 0</span></p>
+                <a href="payment.html" class="payment-btn">Lanjutkan ke Pembayaran</a>
+            </div>
         </div>
-
-        <div class="ticket-list"></div>
-
-        <div class="order-summary">
-            <h2>Pesanan</h2>
-            <div class="order-items"></div>
-            <p><strong>Total Pesanan:</strong> <span id="total-price">Rp 0</span></p>
-            <button id="order-now">Order Now</button>
-        </div>
-
     </main>
 </body>
-<script src="js/detail.js"></script>
+<script src="js/payment.js"></script>
 
 </html>
