@@ -75,10 +75,10 @@ async function fetchConcerts() {
     }
 }
 
-// Fungsi untuk memeriksa apakah pengguna sudah login
+// Fungsi untuk memeriksa apakah pengguna sudah login (dengan token)
 function isLoggedIn() {
-    // Gantilah sesuai cara Anda menyimpan status login (localStorage, cookie, dll)
-    return localStorage.getItem('isLoggedIn') === 'true';  // Contoh menggunakan localStorage
+    const token = localStorage.getItem("authToken");
+    return token != null;  // Jika token ada, dianggap login
 }
 
 // Fungsi untuk menangani klik tombol "Pesan Sekarang"
