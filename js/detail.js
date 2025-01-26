@@ -96,4 +96,8 @@ async function fetchTickets() {
 }
 
 // Panggil fungsi fetchConcertDetail saat halaman dimuat
-document.addEventListener('DOMContentLoaded', fetchConcertDetail);
+document.addEventListener('DOMContentLoaded', () => {
+    fetchConcertDetail();
+    fetchTickets(); // Tambahkan ini agar tiket ikut dimuat
+});
+
