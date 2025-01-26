@@ -19,26 +19,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("Order Details from localStorage:", orderDetails);
 
-    // Pastikan semua field tersedia sebelum mengaksesnya
-    document.getElementById("concert-name").textContent = orderDetails.concertName ?? "Data tidak tersedia";
-    document.getElementById("concert-location").textContent = orderDetails.concertLocation ?? "Data tidak tersedia";
-    document.getElementById("concert-date").textContent = orderDetails.concertDate ?? "Data tidak tersedia";
-    document.getElementById("concert-price").textContent = orderDetails.concertPrice ?? "Data tidak tersedia";
+    // Pastikan orderDetails adalah array, lalu ambil elemen pertama
+    if (Array.isArray(orderDetails) && orderDetails.length > 0) {
+        orderDetails = orderDetails[0]; // Ambil elemen pertama
+    } else {
+        console.error("Invalid orderDetails structure!");
+        return;
+    }
+
+    // Tampilkan data konser
+    document.getElementById("concert-name").textContent = orderDetails.nama_tiket ?? "Data tidak tersedia";
+    document.getElementById("concert-location").textContent = "Lokasi tidak tersedia"; // Tidak ada di orderDetails
+    document.getElementById("concert-date").textContent = "Tanggal tidak tersedia"; // Tidak ada di orderDetails
+    document.getElementById("concert-price").textContent = `Rp ${orderDetails.harga.toLocaleString('id-ID')}` ?? "Data tidak tersedia";
 
     let total = 0;
     let ticketListHTML = "";
 
-    if (orderDetails.tickets && typeof orderDetails.tickets === "object") {
-        Object.keys(orderDetails.tickets).forEach(ticketId => {
-            const quantity = orderDetails.tickets[ticketId];
-            if (quantity > 0) {
-                ticketListHTML += `<li>Tiket ID ${ticketId}: ${quantity}x</li>`;
-                total += quantity * 50000; // Ganti dengan harga tiket aktual
-            }
-        });
-    } else {
-        console.error("Tickets data is missing or invalid!");
-    }
+    // Menampilkan tiket yang dipesan
+    ticketListHTML += `<li>${orderDetails.nama_tiket}: ${orderDetails.jumlah}x</li>`;
+    total = orderDetails.subtotal;
 
     document.querySelector(".order-items ul").innerHTML = ticketListHTML || "<li>Data tiket tidak tersedia</li>";
     document.getElementById("total-price").textContent = `Rp ${total.toLocaleString('id-ID')}`;
