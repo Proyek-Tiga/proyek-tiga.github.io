@@ -234,8 +234,9 @@ h2 {
 
 h3 {
     font-size: 28px;
-    color: #007BFF;
+    color: #27568b;
     margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .concert-info {
@@ -252,6 +253,7 @@ h3 {
 
 .info {
     flex: 1;
+    color: #27568b;
 }
 
 .info p {

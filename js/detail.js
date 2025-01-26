@@ -28,6 +28,15 @@ async function fetchConcertDetail() {
         }
 
         // Menampilkan informasi detail konser
+        const concertDate = new Date(concert.tanggal_konser);
+        const formattedDate = concertDate.toLocaleDateString('id-ID', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+        const formattedTime = concertDate.toLocaleTimeString('id-ID', {
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+
+        // Menampilkan informasi detail konser
         concertDetailsContainer.innerHTML = `
             <h2>Detail Konser</h2>
             <h3>${concert.nama_konser || 'Nama Konser Tidak Tersedia'}</h3>
@@ -36,7 +45,7 @@ async function fetchConcertDetail() {
                 <div class="info">
                     <p><strong>Harga:</strong> Rp ${concert.harga ? concert.harga.toLocaleString('id-ID') : '0'}</p>
                     <p><strong>Lokasi:</strong> ${concert.lokasi_name || 'Lokasi Tidak Tersedia'}</p>
-                    <p><strong>Tanggal:</strong> ${new Date(concert.tanggal_konser).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p><strong>Tanggal:</strong> ${formattedDate} - ${formattedTime} WIB</p>
                     <p><strong>Jumlah Tiket:</strong> ${concert.jumlah_tiket || 0} Tiket</p>
                     <p><strong>Nama Penyelenggara:</strong> ${concert.user_name || 'Nama Pengguna Tidak Tersedia'}</p>
                 </div>
