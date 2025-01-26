@@ -76,16 +76,16 @@ async function fetchTickets() {
         let cart = {};
 
         ticketListContainer.innerHTML = tickets.map(ticket => {
-            cart[ticket.id] = 0;
+            cart[ticket.tiket_id] = 0;
             return `
-                <div class="ticket-card" data-id="${ticket.id}">
+                <div class="ticket-card" data-id="${ticket.tiket_id}">
                     <h4>${ticket.nama_tiket}</h4>
                     <p><strong>Harga:</strong> Rp ${ticket.harga.toLocaleString('id-ID')}</p>
                     <p><strong>Jumlah Tiket:</strong> ${ticket.jumlah_tiket} Tiket</p>
                     <div class="quantity-control">
-                        <button class="decrease" data-id="${ticket.id}">-</button>
-                        <span class="quantity" id="quantity-${ticket.id}">0</span>
-                        <button class="increase" data-id="${ticket.id}">+</button>
+                        <button class="decrease" data-id="${ticket.tiket_id}">-</button>
+                        <span class="quantity" id="quantity-${ticket.tiket_id}">0</span>
+                        <button class="increase" data-id="${ticket.tiket_id}">+</button>
                     </div>
                 </div>
             `;
@@ -96,7 +96,7 @@ async function fetchTickets() {
             if (!target.classList.contains("increase") && !target.classList.contains("decrease")) return;
 
             const ticketId = target.getAttribute("data-id");
-            const ticket = tickets.find(t => t.id == ticketId);
+            const ticket = tickets.find(t => t.tiket_id == ticketId);
 
             // Cek apakah tiket ditemukan
             if (!ticket) {
