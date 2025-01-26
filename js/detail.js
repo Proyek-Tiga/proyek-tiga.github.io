@@ -155,6 +155,47 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchTickets();
 });
 
+document.addEventListener("click", function (event) {
+    if (event.target.id === "order-now") {
+        // Ambil elemen tiket yang dipesan
+        let cart = {};
+        document.querySelectorAll(".quantity-control .quantity").forEach(el => {
+            const ticketId = el.id.replace("quantity-", "");
+            const quantity = parseInt(el.textContent);
+            if (quantity > 0) {
+                cart[ticketId] = quantity;
+            }
+        });
+
+        // Ambil detail tiket dari API yang sebelumnya sudah di-load
+        fetch(apiTiketURL)
+            .then(response => response.json())
+            .then(tickets => {
+                if (!Array.isArray(tickets)) tickets = [tickets];
+
+                // Buat array berisi tiket yang dipesan
+                const orderDetails = Object.keys(cart).map(ticketId => {
+                    const ticket = tickets.find(t => t.tiket_id == ticketId);
+                    return {
+                        tiket_id: ticket.tiket_id,
+                        nama_tiket: ticket.nama_tiket,
+                        harga: ticket.harga,
+                        jumlah: cart[ticketId],
+                        subtotal: ticket.harga * cart[ticketId]
+                    };
+                });
+
+                // Simpan data pesanan ke localStorage
+                localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+
+                // Arahkan ke halaman payment
+                window.location.href = "payment.html";
+            })
+            .catch(error => console.error("Gagal mengambil data tiket:", error));
+    }
+});
+
+
 
 
 
