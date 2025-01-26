@@ -124,7 +124,7 @@ async function fetchTickets() {
                 cart[ticketId]--;
             }
             document.getElementById(`quantity-${ticketId}`).textContent = cart[ticketId];
-            updateOrderSummary(cart, tickets, orderSummaryContainer);
+            updateOrderSummary(cart, tickets);
         });
         
         updateOrderSummary(cart, tickets, orderSummaryContainer);
@@ -134,7 +134,7 @@ async function fetchTickets() {
     }
 }
 
-function updateOrderSummary(cart, tickets, orderSummaryContainer) {
+function updateOrderSummary(cart, tickets) {
     let total = 0;
     let summaryHTML = '<h3>Pesanan:</h3><ul>';
     
@@ -152,8 +152,38 @@ function updateOrderSummary(cart, tickets, orderSummaryContainer) {
     });
     
     summaryHTML += `</ul><h3>Total Pesanan: Rp ${total.toLocaleString('id-ID')}</h3>`;
-    summaryHTML += '<button class="order-button">Order Now</button>';
-    orderSummaryContainer.innerHTML = summaryHTML;
+    summaryHTML += '<button id="order-now">Order Now</button>';
+
+    // Perbarui tampilan ringkasan pesanan
+    document.querySelector('.order-summary').innerHTML = summaryHTML;
+
+    // Perbarui total harga
+    document.getElementById("total-price").textContent = `Rp ${total.toLocaleString('id-ID')}`;
 }
+
+document.addEventListener('click', event => {
+    if (event.target.id === "order-now") {
+        if (Object.values(cart).some(qty => qty > 0)) {
+            const orderDetails = Object.entries(cart)
+                .filter(([_, qty]) => qty > 0)
+                .map(([ticketId, qty]) => {
+                    const ticket = tickets.find(t => t.id == ticketId);
+                    return {
+                        id_tiket: ticketId,
+                        jumlah: qty,
+                        harga: ticket.harga,
+                        total: ticket.harga * qty
+                    };
+                });
+
+            localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+
+            window.location.href = `https://proyek-tiga.github.io/payment.html?id=${concertId}`;
+        } else {
+            alert("Pilih minimal satu tiket sebelum melakukan pemesanan!");
+        }
+    }
+});
+
 
 
