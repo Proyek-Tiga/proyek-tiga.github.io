@@ -161,29 +161,5 @@ function updateOrderSummary(cart, tickets) {
     document.getElementById("total-price").textContent = `Rp ${total.toLocaleString('id-ID')}`;
 }
 
-document.addEventListener('click', event => {
-    if (event.target.id === "order-now") {
-        if (Object.values(cart).some(qty => qty > 0)) {
-            const orderDetails = Object.entries(cart)
-                .filter(([_, qty]) => qty > 0)
-                .map(([ticketId, qty]) => {
-                    const ticket = tickets.find(t => t.id == ticketId);
-                    return {
-                        id_tiket: ticketId,
-                        jumlah: qty,
-                        harga: ticket.harga,
-                        total: ticket.harga * qty
-                    };
-                });
-
-            localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
-
-            window.location.href = `https://proyek-tiga.github.io/payment.html?id=${concertId}`;
-        } else {
-            alert("Pilih minimal satu tiket sebelum melakukan pemesanan!");
-        }
-    }
-});
-
 
 
