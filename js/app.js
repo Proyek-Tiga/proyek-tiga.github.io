@@ -43,7 +43,7 @@ async function fetchConcerts() {
 
             // Buat HTML kartu
             const cardHTML = `
-                <div class="card" data-id="${data.id_konser}">
+                <div class="card" data-id="${data.konser_id}">
                     <img src="${imagePath}" alt="${data.nama_konser || 'Nama Konser Tidak Tersedia'}">
                     <h3>${data.nama_konser || 'Nama Konser Tidak Tersedia'}</h3>
                     <p><i class="fas fa-tag"></i> Rp ${data.harga ? data.harga.toLocaleString('id-ID') : '0'}</p>
@@ -84,6 +84,9 @@ function isLoggedIn() {
 // Fungsi untuk menangani klik tombol "Pesan Sekarang"
 function handleOrderClick(event) {
     event.preventDefault();  // Mencegah aksi default (navigasi ke link)
+
+    const concertId = event.target.closest('.card').dataset.id;  // Ambil ID konser
+    console.log(concertId);  // Periksa apakah ID konser terambil dengan benar
 
     if (!isLoggedIn()) {
         // Tampilkan pesan login
