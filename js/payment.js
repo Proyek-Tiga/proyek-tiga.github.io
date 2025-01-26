@@ -1,71 +1,51 @@
 const token = localStorage.getItem("authToken");
 
 document.addEventListener("DOMContentLoaded", function () {
-    const concertDetails = JSON.parse(localStorage.getItem("concertDetails"));
-
-    if (concertDetails) {
-        const concertDetailContainer = document.querySelector(".concert-detail-container"); // Sesuaikan dengan elemen di payment.html
-
-        const concertDate = new Date(concertDetails.tanggal_konser);
-        const formattedDate = concertDate.toLocaleDateString('id-ID', {
-            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-        });
-        const formattedTime = concertDate.toLocaleTimeString('id-ID', {
-            hour: '2-digit', minute: '2-digit', second: '2-digit'
-        });
-
-        concertDetailContainer.innerHTML = `
-            <h2>${concertDetails.nama_konser || 'Nama Konser Tidak Tersedia'}</h2>
-            <img src="${concertDetails.image || 'default-image.jpg'}" alt="${concertDetails.nama_konser || 'Nama Konser Tidak Tersedia'}">
-            <p><strong>Harga:</strong> Rp ${concertDetails.harga ? concertDetails.harga.toLocaleString('id-ID') : '0'}</p>
-            <p><strong>Lokasi:</strong> ${concertDetails.lokasi_name || 'Lokasi Tidak Tersedia'}</p>
-            <p><strong>Tanggal:</strong> ${formattedDate} - ${formattedTime} WIB</p>
-            <p><strong>Jumlah Tiket:</strong> ${concertDetails.jumlah_tiket || 0} Tiket</p>
-            <p><strong>Nama Penyelenggara:</strong> ${concertDetails.user_name || 'Nama Pengguna Tidak Tersedia'}</p>
-        `;
-    } else {
-        console.error("Detail konser tidak ditemukan di localStorage");
-    }
-
+    const concertDetailsRaw = localStorage.getItem("concertDetails");
     const orderDetailsRaw = localStorage.getItem("orderDetails");
 
-    if (!orderDetailsRaw) {
-        console.error("Order details not found in localStorage!");
+    if (!concertDetailsRaw || !orderDetailsRaw) {
+        console.error("Data konser atau order tidak ditemukan di localStorage!");
         return;
     }
 
-    let orderDetails;
+    let concertDetails, orderDetails;
 
     try {
+        concertDetails = JSON.parse(concertDetailsRaw);
         orderDetails = JSON.parse(orderDetailsRaw);
     } catch (error) {
-        console.error("Failed to parse orderDetails:", error);
+        console.error("Gagal parsing JSON:", error);
         return;
     }
 
+    console.log("Concert Details from localStorage:", concertDetails);
     console.log("Order Details from localStorage:", orderDetails);
 
-    // Pastikan orderDetails adalah array, lalu ambil elemen pertama
+    // Pastikan orderDetails adalah array dan ambil elemen pertama
     if (Array.isArray(orderDetails) && orderDetails.length > 0) {
         orderDetails = orderDetails[0]; // Ambil elemen pertama
     } else {
-        console.error("Invalid orderDetails structure!");
+        console.error("Struktur orderDetails tidak valid!");
         return;
     }
 
     // Tampilkan data konser
-    document.getElementById("concert-name").textContent = orderDetails.nama_tiket ?? "Data tidak tersedia";
-    document.getElementById("concert-location").textContent = "Lokasi tidak tersedia"; // Tidak ada di orderDetails
-    document.getElementById("concert-date").textContent = "Tanggal tidak tersedia"; // Tidak ada di orderDetails
-    document.getElementById("concert-price").textContent = `Rp ${orderDetails.harga.toLocaleString('id-ID')}` ?? "Data tidak tersedia";
+    document.getElementById("concert-name").textContent = concertDetails.nama_konser ?? "Data tidak tersedia";
+    document.getElementById("concert-location").textContent = concertDetails.lokasi_name ?? "Lokasi tidak tersedia";
+    document.getElementById("concert-date").textContent = new Date(concertDetails.tanggal_konser).toLocaleDateString('id-ID', {
+        day: 'numeric', month: 'long', year: 'numeric'
+    }) ?? "Tanggal tidak tersedia";
+    document.getElementById("concert-price").textContent = `Rp ${concertDetails.harga.toLocaleString('id-ID')}` ?? "Data tidak tersedia";
 
-    let total = 0;
-    let ticketListHTML = "";
+    // Tampilkan gambar konser
+    document.querySelector(".concert-info img").src = concertDetails.image;
+    document.querySelector(".concert-info img").alt = concertDetails.nama_konser;
 
     // Menampilkan tiket yang dipesan
-    ticketListHTML += `<li>${orderDetails.nama_tiket}: ${orderDetails.jumlah}x</li>`;
-    total = orderDetails.subtotal;
+    let total = orderDetails.subtotal;
+    let ticketListHTML = `<li><strong>${orderDetails.nama_tiket}</strong>: ${orderDetails.jumlah}x - Rp ${orderDetails.harga.toLocaleString('id-ID')}</li>`;
 
-    document.querySelector(".order-items ul").innerHTML = ticketListHTML || "<li>Data tiket tidak tersedia</li>";
+    document.querySelector(".order-items ul").innerHTML = ticketListHTML;
     document.getElementById("total-price").textContent = `Rp ${total.toLocaleString('id-ID')}`;
 });
