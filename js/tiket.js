@@ -2,15 +2,15 @@ const token = localStorage.getItem("authToken");
 
 if (!token) {
     alert("Token tidak ditemukan. Harap login terlebih dahulu.");
-    window.location.href = "proyek-tiga.github.io/login"; // Ganti dengan halaman login
+    window.location.href = "proyek-tiga.github.io/login";
 }
 
-// Fungsi untuk mendapatkan user_id dari token
-function getUserIdFromToken() {
+// Fungsi untuk mendapatkan user_name dari token
+function getUserNameFromToken() {
     try {
-        const payload = JSON.parse(atob(token.split(".")[1])); // Dekode token JWT
-        console.log("User ID dari token:", payload.user_id); // Debugging
-        return payload.user_id;
+        const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT
+        console.log("User Name dari token:", payload.user_name); // Debugging
+        return payload.user_name;
     } catch (error) {
         console.error("Error decoding token:", error);
         return null;
@@ -19,9 +19,9 @@ function getUserIdFromToken() {
 
 // Fungsi untuk mengambil tiket dari API
 async function fetchUserTickets() {
-    const userId = getUserIdFromToken();
-    if (!userId) {
-        console.error("User ID tidak ditemukan dalam token");
+    const userName = getUserNameFromToken();
+    if (!userName) {
+        console.error("User Name tidak ditemukan dalam token");
         return;
     }
 
@@ -46,12 +46,16 @@ async function fetchUserTickets() {
             return;
         }
 
-        // Filter tiket berdasarkan user_id
-        const userTickets = tickets.filter(ticket => String(ticket.user_id) === String(userId));
+        // Filter tiket berdasarkan user_name
+        const userTickets = tickets.filter(ticket => ticket.user_name === userName);
         console.log("Tiket sesuai user:", userTickets); // Debugging
 
-        // Menampilkan tiket ke dalam tabel
         const tbody = document.querySelector(".ticket-table tbody");
+        if (!tbody) {
+            console.error("Elemen tbody tidak ditemukan!");
+            return;
+        }
+
         tbody.innerHTML = ""; // Kosongkan sebelum diisi ulang
 
         userTickets.forEach((ticket, index) => {
@@ -62,7 +66,11 @@ async function fetchUserTickets() {
                 <td>${ticket.konser_name}</td>
                 <td>${new Date(ticket.tanggal_konser).toLocaleDateString()}</td>
                 <td>${ticket.konser_location}</td>
-                <td><img src="${ticket.qr_code}" alt="QR Code" width="50"></td>
+                <td>
+                    ${ticket.qr_code 
+                        ? `<img src="${ticket.qr_code}" alt="QR Code" width="50">`
+                        : "Tidak tersedia"}
+                </td>
                 <td>${ticket.transaksi_status}</td>
                 <td><button class="btn-detail" onclick="showTicketDetail(${index})">Detail</button></td>
             `;
@@ -75,7 +83,7 @@ async function fetchUserTickets() {
     }
 }
 
-// Fungsi untuk menampilkan detail tiket (nanti bisa dikembangkan lebih lanjut)
+// Fungsi untuk menampilkan detail tiket
 function showTicketDetail(index) {
     alert(`Menampilkan detail untuk tiket ke-${index + 1}`);
 }
