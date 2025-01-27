@@ -150,7 +150,7 @@ body {
     padding: 30px;
     border-radius: 12px;
     width: 80%;
-    max-width: 600px;
+    max-width: 800px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Shadow yang lebih halus */
     position: relative;
     transform: scale(0.8);
@@ -190,25 +190,41 @@ body {
     text-transform: uppercase; /* Menambah kesan premium */
 }
 
-/* Detail Tiket */
-.ticket-details p {
+/* Body Tiket */
+.ticket-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Informasi Tiket */
+.ticket-info {
+    flex: 1;
+    text-align: left;
     font-size: 18px;
-    margin-bottom: 10px;
-    color: #555; /* Warna teks lebih lembut */
+    color: #555;
+    margin-right: 30px;
+}
+
+.ticket-info p {
+    margin-bottom: 15px;
     font-weight: 500;
 }
 
-.ticket-details span {
+.ticket-info span {
     color: #007bff; /* Warna biru untuk informasi penting */
     font-weight: bold;
 }
 
 /* QR Code */
+.ticket-qr {
+    flex: 1;
+    text-align: center;
+}
+
 #qr-code-container {
     margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 #qr-code-container img {
@@ -216,6 +232,18 @@ body {
     border: 2px solid #ccc;
     border-radius: 10px;
 }
+
+/* Pembatas antara Info dan QR Code */
+.ticket-body:before {
+    content: '';
+    width: 2px;
+    background-color: #eee;
+    height: 200px;
+    position: absolute;
+    left: 50%;
+    top: 20px;
+}
+
 
 @media (max-width: 600px) {
     .ticket-table {
@@ -230,7 +258,16 @@ body {
         font-size: 22px;
     }
 
-    .ticket-details p {
+    .ticket-info {
         font-size: 16px;
+    }
+
+    .ticket-qr img {
+        width: 120px;
+    }
+
+    .ticket-body:before {
+        height: 150px;
+        left: 45%;
     }
 }
