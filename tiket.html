@@ -1,86 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ausa Beats</title>
-    <link rel="stylesheet" href="css/tiket.css">
+    <title>Tiket | Ausa Beats</title>
     <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/tiket.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jwt-decode/3.1.2/jwt-decode.min.js"></script>
 </head>
 
 <body>
     <header>
         <div class="navbar">
-            <div class="logo">Ausa Beats</div>
-            <nav class="nav-center">
-                <a href="index.html" class="nav-item">
-                    <i class="fas fa-home"></i> Beranda
-                </a>
-                <a href="about.html" class="nav-item">
-                    <i class="fas fa-info-circle"></i> Tentang
-                </a>
-                <a href="tiket.html" class="nav-item active">
-                    <i class="fas fa-ticket-alt"></i> Tiket
-                </a>
-                <a href="kontak.html" class="nav-item">
-                    <i class="fas fa-envelope"></i> Kontak
-                </a>
-            </nav>
-            <div class="nav-right">
-                <a href="https://proyek-tiga.github.io/login/" class="btn">Login</a>
-                <a href="https://proyek-tiga.github.io/login/register.html" class="btn">Register</a>
+            <div class="logo">
+                <i class="fas fa-guitar"></i> AuSa Beats
+            </div>
+            <div class="navbar-right">
+                <!-- Pembeli, ikon diganti menjadi orang, bukan button -->
+                <a href="#" class="navbar-icon"><i class="fas fa-user"></i> Pembeli</a>
+                <!-- Tiket dengan warna tombol khusus -->
+                <a href="#" id="tickets-btn" class="navbar-btn tiket-btn"><i class="fas fa-ticket-alt"></i> Tiket</a>
+                <!-- Keluar dengan warna tombol khusus -->
+                <a href="https://proyek-tiga.github.io/login" id="logout-btn" class="navbar-btn keluar-btn"><i
+                        class="fas fa-sign-out-alt"></i> Keluar</a>
             </div>
         </div>
     </header>
 
-    <section class="ticket-section">
-        <h2>Tiket Anda</h2>
-        <table class="ticket-table">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>No. Tiket</th>
-                    <th>Tanggal</th>
-                    <th>Nama Konser</th>
-                    <th>Nama</th>
-                    <th>Jumlah Tiket</th>
-                    <th>Total</th>
-                    <th>QRCode</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>#ATX12345</td>
-                    <td>2024-01-25</td>
-                    <td>Rock Fest 2024</td>
-                    <td>John Doe</td>
-                    <td>2</td>
-                    <td>Rp 200,000</td>
-                    <td><img src="https://via.placeholder.com/50" alt="QRCode"></td>
-                    <td>Berhasil</td>
-                    <td><button class="btn-action">View</button></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>#ATX12346</td>
-                    <td>2024-02-14</td>
-                    <td>Jazz Nights</td>
-                    <td>Jane Smith</td>
-                    <td>1</td>
-                    <td>Rp 300,000</td>
-                    <td><img src="https://via.placeholder.com/50" alt="QRCode"></td>
-                    <td>Gagal</td>
-                    <td><button class="btn-action">View</button></td>
-                </tr>
-                <!-- Tambahkan lebih banyak baris jika perlu -->
-            </tbody>
-        </table>
-    </section>
+    <main>
+        <div class="container">
+            <h2 class="section-title">Tiket Saya</h2>
+            <div class="ticket-container">
+                <table class="ticket-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Tiket</th>
+                            <th>Jumlah</th>
+                            <th>Harga</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>REGULER</td>
+                            <td>2</td>
+                            <td>Rp 4.000.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 </body>
+<script src="js/tiket.js"></script>
 
 </html>
