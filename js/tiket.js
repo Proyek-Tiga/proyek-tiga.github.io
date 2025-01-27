@@ -33,7 +33,8 @@ async function fetchUserTickets() {
     }
 
     try {
-        const response = await fetch(`http://localhost:5000/api/e-ticket/${userId}`, { // Pakai user_id di URL API
+        // Ganti URL menjadi yang sesuai, tidak perlu menggunakan userId dalam URL
+        const response = await fetch("http://localhost:5000/api/e-ticket", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
