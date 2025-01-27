@@ -5,6 +5,8 @@ if (!token) {
     window.location.href = "proyek-tiga.github.io/login";
 }
 
+let tickets = [];  // Menyimpan data tiket di luar fungsi
+
 // Fungsi untuk mendapatkan user_id dari token
 function getUserIdFromToken() {
     try {
@@ -46,7 +48,7 @@ async function fetchUserTickets() {
             throw new Error(`Gagal mengambil data tiket. Status: ${response.status}`);
         }
 
-        const tickets = await response.json();
+        tickets = await response.json();  // Menyimpan data tiket ke variabel global
         console.log("Data tiket dari API:", tickets); // Debugging
 
         if (!Array.isArray(tickets)) {
@@ -71,9 +73,9 @@ async function fetchUserTickets() {
                 <td>${new Date(ticket.tanggal_konser).toLocaleDateString()}</td>
                 <td>${ticket.konser_location}</td>
                 <td>
-                    ${ticket.qr_code 
-                        ? `<img src="${ticket.qr_code}" alt="QR Code" width="50">`
-                        : "Tidak tersedia"}
+                    ${ticket.qr_code
+                    ? `<img src="${ticket.qr_code}" alt="QR Code" width="50">`
+                    : "Tidak tersedia"}
                 </td>
                 <td>${ticket.transaksi_status}</td>
                 <td>
@@ -93,7 +95,7 @@ async function fetchUserTickets() {
 
 // Fungsi untuk menampilkan detail tiket dalam modal
 function showTicketDetail(index) {
-    const ticket = tickets[index]; // Ambil data tiket berdasarkan index
+    const ticket = tickets[index]; // Sekarang kita bisa mengakses 'tickets' karena sudah disimpan secara global
 
     // Isi modal dengan data tiket
     document.getElementById("ticket-name").innerText = ticket.tiket_name;
