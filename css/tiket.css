@@ -233,17 +233,6 @@ body {
     border-radius: 10px;
 }
 
-/* Pembatas antara Info dan QR Code */
-.ticket-body:before {
-    content: '';
-    width: 2px;
-    background-color: #eee;
-    height: 200px;
-    position: absolute;
-    left: 80%;
-}
-
-
 @media (max-width: 600px) {
     .ticket-table {
         font-size: 14px;

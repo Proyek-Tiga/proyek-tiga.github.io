@@ -157,20 +157,23 @@ function downloadTicketPDF() {
     const status = document.getElementById("status").innerText;
     const qrCodeSrc = document.getElementById("qr-code").src;
 
-    // Set teks pada PDF
-    doc.setFontSize(16);
-    doc.text('e-Ticket', 20, 20);
+    // Menambahkan header dan styling
+    doc.setFontSize(20);
+    doc.text('e-Ticket', 20, 20); // Judul PDF
     doc.setFontSize(12);
-    doc.text(`Nama: ${userName}`, 20, 30);
-    doc.text(`Jenis Tiket: ${ticketName}`, 20, 40);
-    doc.text(`Nama Konser: ${concertName}`, 20, 50);
-    doc.text(`Tanggal Konser: ${concertDate}`, 20, 60);
-    doc.text(`Lokasi: ${location}`, 20, 70);
-    doc.text(`Status: ${status}`, 20, 80);
 
-    // Tambahkan QR code jika ada
+    // Menambahkan data tiket secara terformat
+    const yStart = 30; // Titik awal vertikal untuk data
+    doc.text(`Nama: ${userName}`, 20, yStart);
+    doc.text(`Jenis Tiket: ${ticketName}`, 20, yStart + 10);
+    doc.text(`Nama Konser: ${concertName}`, 20, yStart + 20);
+    doc.text(`Tanggal Konser: ${concertDate}`, 20, yStart + 30);
+    doc.text(`Lokasi: ${location}`, 20, yStart + 40);
+    doc.text(`Status: ${status}`, 20, yStart + 50);
+
+    // Jika ada QR Code, tambahkan ke PDF
     if (qrCodeSrc) {
-        doc.addImage(qrCodeSrc, 'PNG', 20, 90, 50, 50);
+        doc.addImage(qrCodeSrc, 'PNG', 150, yStart, 50, 50); // Posisi QR Code
     }
 
     // Unduh PDF
