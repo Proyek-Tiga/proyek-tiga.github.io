@@ -2,24 +2,21 @@ const token = localStorage.getItem("authToken");
 
 if (!token) {
     alert("Token tidak ditemukan. Harap login terlebih dahulu.");
-    window.location.href = "/login.html"; // Sesuaikan dengan halaman login
+    window.location.href = "proyek-tiga.github.io/login";
 }
 
-// Fungsi untuk mendapatkan user_name dan validasi token JWT
+// Fungsi untuk mendapatkan user_name dari token
 function getUserNameFromToken() {
     try {
         const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT
-        console.log("User Name dari token:", payload.user_name); // Debugging
+        console.log("Payload token:", payload); // Debugging: tampilkan seluruh payload
 
-        // Periksa apakah token sudah kadaluarsa
-        const currentTime = Math.floor(Date.now() / 1000);
-        if (payload.exp && payload.exp < currentTime) {
-            alert("Sesi telah berakhir. Silakan login kembali.");
-            localStorage.removeItem("authToken");
-            window.location.href = "/login.html";
+        if (!payload.user_name) {
+            console.error("User Name tidak ditemukan dalam token");
             return null;
         }
 
+        console.log("User Name dari token:", payload.user_name);
         return payload.user_name;
     } catch (error) {
         console.error("Error decoding token:", error);
@@ -40,18 +37,12 @@ async function fetchUserTickets() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token}` // Kirim token dengan format yang benar
             }
         });
 
         if (!response.ok) {
-            if (response.status === 401) {
-                alert("Sesi Anda telah habis. Silakan login kembali.");
-                localStorage.removeItem("authToken");
-                window.location.href = "/login.html";
-            } else {
-                throw new Error(`Gagal mengambil data tiket. Status: ${response.status}`);
-            }
+            throw new Error(`Gagal mengambil data tiket. Status: ${response.status}`);
         }
 
         const tickets = await response.json();
@@ -62,10 +53,7 @@ async function fetchUserTickets() {
             return;
         }
 
-        // Filter tiket berdasarkan user_name
-        const userTickets = tickets.filter(ticket => ticket.user_name === userName);
-        console.log("Tiket sesuai user:", userTickets); // Debugging
-
+        // Jika API sudah memfilter berdasarkan token, kita langsung pakai data tanpa filter lagi
         const tbody = document.querySelector(".ticket-table tbody");
         if (!tbody) {
             console.error("Elemen tbody tidak ditemukan!");
@@ -74,25 +62,20 @@ async function fetchUserTickets() {
 
         tbody.innerHTML = ""; // Kosongkan sebelum diisi ulang
 
-        if (userTickets.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;">Tidak ada tiket ditemukan.</td></tr>`;
-            return;
-        }
-
-        userTickets.forEach((ticket, index) => {
+        tickets.forEach((ticket, index) => {
             const row = document.createElement("tr");
             row.innerHTML = `
                 <td>${index + 1}</td>
-                <td>${ticket.tiket_name || "Tidak tersedia"}</td>
-                <td>${ticket.konser_name || "Tidak tersedia"}</td>
-                <td>${ticket.tanggal_konser ? new Date(ticket.tanggal_konser).toLocaleDateString() : "Tidak tersedia"}</td>
-                <td>${ticket.konser_location || "Tidak tersedia"}</td>
+                <td>${ticket.tiket_name}</td>
+                <td>${ticket.konser_name}</td>
+                <td>${new Date(ticket.tanggal_konser).toLocaleDateString()}</td>
+                <td>${ticket.konser_location}</td>
                 <td>
                     ${ticket.qr_code 
                         ? `<img src="${ticket.qr_code}" alt="QR Code" width="50">`
                         : "Tidak tersedia"}
                 </td>
-                <td>${ticket.transaksi_status || "Tidak tersedia"}</td>
+                <td>${ticket.transaksi_status}</td>
                 <td><button class="btn-detail" onclick="showTicketDetail(${index})">Detail</button></td>
             `;
             tbody.appendChild(row);
