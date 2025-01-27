@@ -129,8 +129,70 @@ body {
     color: #0056b3;
 }
 
+/* CSS untuk Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn {
+    font-size: 30px;
+    color: #333;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.e-ticket {
+    text-align: center;
+}
+
+.e-ticket h2 {
+    color: #007bff;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.ticket-details p {
+    font-size: 18px;
+    color: #333;
+}
+
+#qr-code-container {
+    margin-top: 20px;
+}
+
+#qr-code-container img {
+    margin-top: 10px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+}
+
 @media (max-width: 600px) {
     .ticket-table {
         font-size: 14px;
+    }
+
+    .modal-content {
+        width: 90%;
     }
 }

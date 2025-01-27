@@ -78,7 +78,7 @@ async function fetchUserTickets() {
                 <td>${ticket.transaksi_status}</td>
                 <td>
                     <button class="btn-detail" onclick="showTicketDetail(${index})">
-                        <i class="fas fa-eye"></i> <!-- Ikon mata untuk Detail -->
+                        <i class="fa-solid fa-circle-info"></i>
                     </button>
                 </td>
             `;
@@ -91,9 +91,32 @@ async function fetchUserTickets() {
     }
 }
 
-// Fungsi untuk menampilkan detail tiket
+// Fungsi untuk menampilkan detail tiket dalam modal
 function showTicketDetail(index) {
-    alert(`Menampilkan detail untuk tiket ke-${index + 1}`);
+    const ticket = tickets[index]; // Ambil data tiket berdasarkan index
+
+    // Isi modal dengan data tiket
+    document.getElementById("ticket-name").innerText = ticket.tiket_name;
+    document.getElementById("concert-name").innerText = ticket.konser_name;
+    document.getElementById("concert-date").innerText = new Date(ticket.tanggal_konser).toLocaleDateString();
+    document.getElementById("location").innerText = ticket.konser_location;
+    document.getElementById("status").innerText = ticket.transaksi_status;
+    
+    // QR Code (jika ada)
+    if (ticket.qr_code) {
+        document.getElementById("qr-code").src = ticket.qr_code;
+        document.getElementById("qr-code-container").style.display = "block";
+    } else {
+        document.getElementById("qr-code-container").style.display = "none";
+    }
+
+    // Tampilkan modal
+    document.getElementById("ticket-modal").style.display = "flex";
+}
+
+// Fungsi untuk menutup modal
+function closeTicketModal() {
+    document.getElementById("ticket-modal").style.display = "none";
 }
 
 // Panggil fungsi saat halaman dimuat
