@@ -76,7 +76,11 @@ async function fetchUserTickets() {
                         : "Tidak tersedia"}
                 </td>
                 <td>${ticket.transaksi_status}</td>
-                <td><button class="btn-detail" onclick="showTicketDetail(${index})">Detail</button></td>
+                <td>
+                    <button class="btn-detail" onclick="showTicketDetail(${index})">
+                        <i class="fas fa-eye"></i> <!-- Ikon mata untuk Detail -->
+                    </button>
+                </td>
             `;
             tbody.appendChild(row);
         });
