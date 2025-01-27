@@ -5,19 +5,19 @@ if (!token) {
     window.location.href = "proyek-tiga.github.io/login";
 }
 
-// Fungsi untuk mendapatkan user_name dari token
-function getUserNameFromToken() {
+// Fungsi untuk mendapatkan user_id dari token
+function getUserIdFromToken() {
     try {
         const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT
         console.log("Payload token:", payload); // Debugging: tampilkan seluruh payload
 
-        if (!payload.user_name) {
-            console.error("User Name tidak ditemukan dalam token");
+        if (!payload.user_id) {
+            console.error("User ID tidak ditemukan dalam token");
             return null;
         }
 
-        console.log("User Name dari token:", payload.user_name);
-        return payload.user_name;
+        console.log("User ID dari token:", payload.user_id);
+        return payload.user_id;
     } catch (error) {
         console.error("Error decoding token:", error);
         return null;
@@ -26,14 +26,14 @@ function getUserNameFromToken() {
 
 // Fungsi untuk mengambil tiket dari API
 async function fetchUserTickets() {
-    const userName = getUserNameFromToken();
-    if (!userName) {
-        console.error("User Name tidak ditemukan dalam token");
+    const userId = getUserIdFromToken();
+    if (!userId) {
+        console.error("User ID tidak ditemukan dalam token");
         return;
     }
 
     try {
-        const response = await fetch("http://localhost:5000/api/e-ticket", {
+        const response = await fetch(`http://localhost:5000/api/e-ticket/${userId}`, { // Pakai user_id di URL API
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -53,7 +53,6 @@ async function fetchUserTickets() {
             return;
         }
 
-        // Jika API sudah memfilter berdasarkan token, kita langsung pakai data tanpa filter lagi
         const tbody = document.querySelector(".ticket-table tbody");
         if (!tbody) {
             console.error("Elemen tbody tidak ditemukan!");
