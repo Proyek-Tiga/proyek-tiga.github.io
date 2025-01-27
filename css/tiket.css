@@ -129,61 +129,91 @@ body {
     color: #0056b3;
 }
 
-/* CSS untuk Modal */
+/* Modal Background */
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8); /* Background yang lebih gelap */
     justify-content: center;
     align-items: center;
 }
 
+/* Konten Modal */
 .modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
     width: 80%;
-    max-width: 500px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Shadow yang lebih halus */
+    position: relative;
+    transform: scale(0.8);
+    animation: modal-fade 0.4s forwards; /* Animasi fade-in */
 }
 
+/* Animasi Modal */
+@keyframes modal-fade {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Tombol Close */
 .close-btn {
     font-size: 30px;
     color: #333;
     cursor: pointer;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
 }
 
+/* Bagian e-Ticket */
 .e-ticket {
     text-align: center;
-}
-
-.e-ticket h2 {
-    color: #007bff;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.ticket-details p {
-    font-size: 18px;
+    font-family: 'Arial', sans-serif;
     color: #333;
 }
 
+.e-ticket h2 {
+    font-size: 28px;
+    color: #5cb85c; /* Warna hijau lembut */
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase; /* Menambah kesan premium */
+}
+
+/* Detail Tiket */
+.ticket-details p {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #555; /* Warna teks lebih lembut */
+    font-weight: 500;
+}
+
+.ticket-details span {
+    color: #007bff; /* Warna biru untuk informasi penting */
+    font-weight: bold;
+}
+
+/* QR Code */
 #qr-code-container {
-    margin-top: 20px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #qr-code-container img {
-    margin-top: 10px;
-    border: 2px solid #ddd;
+    margin-top: 15px;
+    border: 2px solid #ccc;
     border-radius: 10px;
 }
 
@@ -194,5 +224,13 @@ body {
 
     .modal-content {
         width: 90%;
+    }
+
+    .e-ticket h2 {
+        font-size: 22px;
+    }
+
+    .ticket-details p {
+        font-size: 16px;
     }
 }

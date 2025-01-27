@@ -68,6 +68,7 @@ async function fetchUserTickets() {
             const row = document.createElement("tr");
             row.innerHTML = `
                 <td>${index + 1}</td>
+                <td>${ticket.user_name}</td>
                 <td>${ticket.tiket_name}</td>
                 <td>${ticket.konser_name}</td>
                 <td>${new Date(ticket.tanggal_konser).toLocaleDateString()}</td>
@@ -98,6 +99,7 @@ function showTicketDetail(index) {
     const ticket = tickets[index]; // Sekarang kita bisa mengakses 'tickets' karena sudah disimpan secara global
 
     // Isi modal dengan data tiket
+    document.getElementById("user-name").innerText = ticket.user_name;
     document.getElementById("ticket-name").innerText = ticket.tiket_name;
     document.getElementById("concert-name").innerText = ticket.konser_name;
     document.getElementById("concert-date").innerText = new Date(ticket.tanggal_konser).toLocaleDateString();
