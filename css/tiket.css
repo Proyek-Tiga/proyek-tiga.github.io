@@ -210,6 +210,7 @@ body {
 .ticket-info p {
     margin-bottom: 15px;
     font-weight: 500;
+    font-size: 15px;
 }
 
 .ticket-info span {

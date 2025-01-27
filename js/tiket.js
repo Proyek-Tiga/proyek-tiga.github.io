@@ -125,7 +125,7 @@ function showTicketDetail(index) {
     document.getElementById("concert-date").innerText = formattedDateTime;
     document.getElementById("location").innerText = ticket.konser_location;
     document.getElementById("status").innerText = ticket.transaksi_status;
-    
+
     // QR Code (jika ada)
     if (ticket.qr_code) {
         document.getElementById("qr-code").src = ticket.qr_code;
@@ -142,6 +142,43 @@ function showTicketDetail(index) {
 function closeTicketModal() {
     document.getElementById("ticket-modal").style.display = "none";
 }
+
+// Fungsi untuk mengunduh e-Ticket
+function downloadTicketPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Ambil data dari modal
+    const userName = document.getElementById("user-name").innerText;
+    const ticketName = document.getElementById("ticket-name").innerText;
+    const concertName = document.getElementById("concert-name").innerText;
+    const concertDate = document.getElementById("concert-date").innerText;
+    const location = document.getElementById("location").innerText;
+    const status = document.getElementById("status").innerText;
+    const qrCodeSrc = document.getElementById("qr-code").src;
+
+    // Set teks pada PDF
+    doc.setFontSize(16);
+    doc.text('e-Ticket', 20, 20);
+    doc.setFontSize(12);
+    doc.text(`Nama: ${userName}`, 20, 30);
+    doc.text(`Jenis Tiket: ${ticketName}`, 20, 40);
+    doc.text(`Nama Konser: ${concertName}`, 20, 50);
+    doc.text(`Tanggal Konser: ${concertDate}`, 20, 60);
+    doc.text(`Lokasi: ${location}`, 20, 70);
+    doc.text(`Status: ${status}`, 20, 80);
+
+    // Tambahkan QR code jika ada
+    if (qrCodeSrc) {
+        doc.addImage(qrCodeSrc, 'PNG', 20, 90, 50, 50);
+    }
+
+    // Unduh PDF
+    doc.save(`${ticketName}_eTicket.pdf`);
+}
+
+// Tambahkan event listener pada tombol unduh
+document.getElementById("download-ticket").addEventListener("click", downloadTicketPDF);
 
 // Panggil fungsi saat halaman dimuat
 document.addEventListener("DOMContentLoaded", fetchUserTickets);
