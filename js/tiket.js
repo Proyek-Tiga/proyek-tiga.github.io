@@ -98,11 +98,31 @@ async function fetchUserTickets() {
 function showTicketDetail(index) {
     const ticket = tickets[index]; // Sekarang kita bisa mengakses 'tickets' karena sudah disimpan secara global
 
+    // Format tanggal dan waktu konser
+    const concertDate = new Date(ticket.tanggal_konser);
+
+    // Format tanggal: 29 Januari 2025
+    const formattedDate = concertDate.toLocaleDateString('id-ID', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    // Format waktu: Pukul 07.00 AM
+    const formattedTime = concertDate.toLocaleTimeString('id-ID', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    });
+
+    // Gabungkan tanggal dan waktu
+    const formattedDateTime = `${formattedDate}, Pukul ${formattedTime}`;
+
     // Isi modal dengan data tiket
     document.getElementById("user-name").innerText = ticket.user_name;
     document.getElementById("ticket-name").innerText = ticket.tiket_name;
     document.getElementById("concert-name").innerText = ticket.konser_name;
-    document.getElementById("concert-date").innerText = new Date(ticket.tanggal_konser).toLocaleDateString();
+    document.getElementById("concert-date").innerText = formattedDateTime;
     document.getElementById("location").innerText = ticket.konser_location;
     document.getElementById("status").innerText = ticket.transaksi_status;
     
