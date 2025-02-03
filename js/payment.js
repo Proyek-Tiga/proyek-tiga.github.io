@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const user = JSON.parse(atob(token.split(".")[1])); // Decode JWT untuk mendapatkan user_id
             const user_id = user.user_id;
 
-            const paymentURL = `https://tiket-backend-theta.vercel.app/api/payment/${transactionId}`;
+            const paymentURL = `http://localhost:5000/api/payment/${transactionId}`;
             const paymentData = { user_id: user_id };
 
             const response = await fetch(paymentURL, {
