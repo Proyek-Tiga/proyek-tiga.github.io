@@ -36,7 +36,7 @@ async function fetchUserTickets() {
 
     try {
         // Ganti URL menjadi yang sesuai, tidak perlu menggunakan userId dalam URL
-        const response = await fetch("http://localhost:5000/api/e-ticket", {
+        const response = await fetch("https://tiket-backend-theta.vercel.app/api/e-ticket", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
